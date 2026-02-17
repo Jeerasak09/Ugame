@@ -44,6 +44,14 @@ class Student{
         stamina = maxStamina;
     }
 
+    void attack(Student &target, int moveType){
+        int dmg = 0;
+        int currentPwr = power + (rand()%5);
+        bool isCrit = (rand()%100) < agility;
+        
+        cout << "> " << name << " (" << jobClass << ") ";
+
+
 
 
 
