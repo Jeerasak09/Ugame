@@ -51,6 +51,34 @@ class Student{
         
         cout << "> " << name << " (" << jobClass << ") ";
 
+        if (moveType == 1) {
+            cout << "Basic Strike!\n";
+            dmg = currentPwr - (target.defense / 3);
+            stamina += 5;
+            } else if (moveType == 2) {
+                if (stamina >= 15) {
+                    stamina -= 15;
+                    cout << "SIGNATURE MOVE!\n";
+                    dmg = (int)(currentPwr * 1.8) - (target.defense / 3);
+                    } else {
+                        cout << "Signature Move... but not enough Stamina! (Weak attack)\n";
+                        dmg = 5;
+                    }
+                }
+                if (isCrit) {
+                    dmg *= 2;
+                    cout << "   *** CRITICAL HIT! ***\n";
+                }
+
+                if (dmg < 1) dmg = 1;
+                target.takeHit(dmg);
+                cout << "   Result: " << target.name << " took " << dmg << " damage.\n";
+                if (stamina > maxStamina) stamina = maxStamina;
+            }
+        };
+
+
+
 
 
 
