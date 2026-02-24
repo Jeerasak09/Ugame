@@ -77,6 +77,67 @@ class Student{
             }
         };
 
+        Student createCharacter(string name, int classChoice) {
+            if (classChoice == 1) {
+                return Student(name, "Slugger", 100, 40, 28, 10, 10);
+            } else if (classChoice == 2){
+                return Student(name, "Judo Captain", 160, 50, 15, 20, 5);
+            } else if (classChoice == 3){
+                return Student(name, "Skater Boy", 80, 60, 20, 8, 30);
+            }
+            return Student(name, "Transfer Student", 100, 50, 20, 10, 10);
+        }
+
+        bool isPartyWipedOut(vector<Student> &party) {
+            for (int i = 0; i < party.size(); i++) {
+                if (!party[i].isKnockedOut()) return false;
+            }
+            return true;
+        }
+
+        void visitCanteen(vector<Student> &party, int &money) {
+            cout << "\n=== SCHOOL CANTEEN ===\n";
+            cout << "You have " << money << " Yen.\n";
+            int cost = party.size() * 100;
+    
+        cout << "Cost to feed your gang (Full HP/Stamina): " << cost << " Yen.\n";
+        if (money >= cost) {
+            cout << "Buy food? (1 = Yes, 0 = No): ";
+            int choice;
+            cin >> choice;
+            if (choice == 1) {
+                money -= cost;
+                for (int i = 0; i < party.size(); i++) party[i].recoverFull();
+                cout << "Everyone ate Yakisoba Bread and recovered full HP & Stamina!\n";
+            }
+        } else {
+            cout << "Not enough money to feed the gang...\n";
+        }
+    }
+
+    void recruitMenu(vector<Student> &party, int reputation) {
+        if (party.size() >= 3) return;
+
+        int requiredRep = party.size() * 300;
+        if (reputation >= requiredRep) {
+            cout << "\n[!] Your Reputation (" << reputation << ") attracts a new follower!\n";
+            cout << "Recruit a new member?\n 1. Ken (Slugger)\n 2. Goro (Judo Captain)\n 0. Skip\nSelect: ";
+            int choice; cin >> choice;
+            if (choice == 1) party.push_back(createCharacter("Ken", 1));
+            else if (choice == 2) party.push_back(createCharacter("Goro", 2));
+
+            if (choice != 0) cout << "New member joined the gang!\n";
+        }
+    }
+
+
+
+
+
+                
+
+
+
 
 
 
