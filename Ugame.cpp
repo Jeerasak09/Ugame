@@ -44,6 +44,7 @@ public:
         hp = maxHp;
         stamina = maxStamina;
     }
+    //ฟังชั่นเพื่อให้ผู้เล่นเลือกว่าจะทำโจมตีรูปแบบใด
 
     void attack(Student &target, int moveType) {
         int dmg = 0;
@@ -102,7 +103,7 @@ string drawBar(int current, int max, int length) {
     for (int i = fill; i < length; i++) bar += "░"; 
     return bar;
 }
-
+// UI แสดงค่าพลังต่างๆ
 void showBattleUI(Student &player, Student &enemy) {
     cout << "\n╔══════════════════════════════════════════════════════════╗\n";
     cout << "   [ทีมผู้เล่น] " << player.name << " (" << player.jobClass << ") | โจมตี: " << player.power << " | ความเร็ว: " << player.agility << "\n";
@@ -114,6 +115,7 @@ void showBattleUI(Student &player, Student &enemy) {
     cout << "╚══════════════════════════════════════════════════════════╝\n";
 }
 
+//เลือกคลาส
 Student createCharacter(string name, int classChoice) {
     if (classChoice == 1) return Student(name, "เทพมวย", 100, 40, 28, 10, 10); 
     else if (classChoice == 2) return Student(name, "กัปตันรักบี้", 160, 50, 15, 20, 5); 
@@ -121,6 +123,7 @@ Student createCharacter(string name, int classChoice) {
     return Student(name, "เด็กใหม่", 100, 50, 20, 10, 10); 
 }
 
+//ฟังชั่นเพิ่มเช็คว่าสมาชิกในทีมตายทั้งหมดหรือยัง
 bool isPartyWipedOut(vector<Student> &party) {
     for (int i = 0; i < party.size(); i++) {
         if (!party[i].isKnockedOut()) return false; 
@@ -128,10 +131,11 @@ bool isPartyWipedOut(vector<Student> &party) {
     return true;
 }
 
+//ฟังชั่นโรงอาหาร
 void visitCanteen(vector<Student> &party, int &money) {
     while (true) {
         cout << "\n┌────────────────────────────────────────┐\n";
-        cout << "│       === โรงอาหารของโรงเรียน ===      │\n";
+        cout << "│       === โรงอาหารของโรงเรียน ===       │\n";
         cout << "└────────────────────────────────────────┘\n";
         cout << " เงินค่าขนมของคุณ: " << money << " เยน\n\n";
         int healCost = party.size() * 100; 
@@ -183,7 +187,7 @@ void visitCanteen(vector<Student> &party, int &money) {
         }
     }
 }
-
+//ระบบการเพิ่มของสมาชิกแก๊ง
 void recruitMenu(vector<Student> &party, int reputation) {
     if (party.size() >= 3) return; 
 
@@ -203,7 +207,7 @@ void recruitMenu(vector<Student> &party, int reputation) {
     }
 }
 
-//เริ่มต้นโปรแกรม
+//เริ่มต้นโปรแกรมหลัก
 int main() {
     #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
@@ -234,7 +238,7 @@ int main() {
     party.push_back(createCharacter(pName, pClass));
 
     vector<Student> enemies;
-    // พารามิเตอร์: ชื่อ, ฉายา, HP, Stamina, โจมตี, ป้องกัน, ความเร็ว
+    // ชื่อ, ฉายา, HP, Stamina, โจมตี, ป้องกัน, ความเร็ว
     enemies.push_back(Student("ยามาดะ", "เด็กเกเรหน้าห้อง", 100, 0, 18, 8, 10)); // ด่าน 1
     enemies.push_back(Student("ทานากะ", "สารวัตรนักเรียน", 150, 0, 25, 12, 15)); // ด่าน 2
     enemies.push_back(Student("เคนจิ", "รองหัวหน้าแก๊ง", 220, 0, 32, 18, 20)); // ด่าน 3
@@ -248,9 +252,9 @@ int main() {
         if (stage > 0) recruitMenu(party, reputation); 
 
         Student &enemy = enemies[stage];
-        cout << "\n\n████████████████████████████████████████████████████████\n";
+        cout << "\n\n=======================================\n";
         cout << "  STAGE " << stage + 1 << " ปะทะ " << enemy.name << " (" << enemy.jobClass << ")\n";
-        cout << "████████████████████████████████████████████████████████\n";
+        cout << "=======================================\n";
 
         while (!enemy.isKnockedOut() && !isPartyWipedOut(party)) {
             
